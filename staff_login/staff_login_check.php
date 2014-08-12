@@ -5,9 +5,8 @@ try
 	require_once '../common/config.php';
 	require_once '../common/common.php';
 
-	$post = sanitize($_POST);
-	$staff_code = $post['code'];
-	$staff_pass = $post['pass'];
+	$staff_code = $_POST['code'];
+	$staff_pass = $_POST['pass'];
 
 	$staff_pass = md5($staff_pass);
 
@@ -26,8 +25,8 @@ try
 
 	if($rec == false)
 	{
-		print 'スタッフコードかパスワードが間違っています。<br/>';
-		print '<a href = "staff_login.html">戻る</a>';
+		echo "スタッフコードかパスワードが間違っています。<br/>";
+		print "<a href = \"staff_login.html\">戻る</a>";
 	}
 	else
 	{
@@ -41,7 +40,7 @@ try
 }
 catch(Exception $e)
 {
-	print 'ただいまメンテナンス中です';
+	echo "ただいまメンテナンス中です";
 	exit();
 }
 

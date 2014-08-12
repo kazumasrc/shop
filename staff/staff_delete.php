@@ -3,15 +3,15 @@ session_start();
 session_regenerate_id(true);
 if(isset($_SESSION['login']) == false)
 {
-	print 'ログインされていません。<br/>';
-	print '<a href = "../staff_login/staff_login.html">ログイン画面へ</a>';
+	echo "ログインされていません。<br/>";
+	echo "<a href = \"../staff_login/staff_login.html\">ログイン画面へ</a>";
 	exit();
 }
 else
 {
-	print $_SESSION['staff_name'];
-	print 'さんログイン中<br/>';
-	print '<br/>';
+	echo $_SESSION['staff_name'];
+	echo "さんログイン中<br/>";
+	echo "<br/>";
 }
 ?>
 
@@ -47,7 +47,7 @@ try
 }
 catch(Exception $e)
 {
-	print 'ただいまメンテナンス中です';
+	echo "ただいまメンテナンス中です";
 	exit();
 }
 
@@ -56,14 +56,14 @@ catch(Exception $e)
 スタッフ削除<br/>
 <br/>
 スタッフコード<br/>
-<?php print $staff_code;?>
+<?php echo $staff_code;?>
 <br/>
 <br/>
 スタッフ名<br/>
-<?php print $staff_name;?><br/>
+<?php echo $staff_name;?><br/>
 このスタッフを削除してよろしいですか？<br/>
 <form method = "post" action = "staff_delete_done.php">
-<input type = "hidden" name = "code" value = "<?php print $staff_code;?>">
+<input type = "hidden" name = "code" value = "<?php echo $staff_code;?>">
 <input type = "button" onclick = "history.back()" value = "戻る">
 <input type = "submit" value = "OK">
 </form>

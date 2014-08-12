@@ -3,15 +3,15 @@ session_start();
 session_regenerate_id(true);
 if(isset($_SESSION['login']) == false)
 {
-	print 'ログインされていません。<br/>';
-	print '<a href = "../staff_login/staff_login.html">ログイン画面へ</a>';
+	echo "ログインされていません。<br/>";
+	echo "<a href = \"../staff_login/staff_login.html\">ログイン画面へ</a>";
 	exit();
 }
 else
 {
-	print $_SESSION['staff_name'];
-	print 'さんログイン中<br/>';
-	print '<br/>';
+	echo $_SESSION['staff_name'];
+	echo "さんログイン中<br/>";
+	echo "<br/>";
 }
 ?>
 
@@ -32,9 +32,7 @@ try
 	$dbh = new PDO($dsn,$user,$password);
 	$dbh->query('SET NAMES utf8');
 
-	$post = sanitize($_POST);
-
-	$staff_code=$post['code'];
+	$staff_code=$_POST['code'];
 	
 	$sql = 'DELETE FROM mst_staff WHERE code=?';
 	$stmt = $dbh->prepare($sql);
@@ -42,12 +40,12 @@ try
 	$stmt->execute($data);
 
 	$dbh = null;
-	print '削除しました。<br/><br/>';
+	echo "削除しました。<br/><br/>";
 
 }
 catch(Exception $e)
 {
-	print 'ただいまメンテナンス中です';
+	echo "ただいまメンテナンス中です";
 	exit();
 }
 

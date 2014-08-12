@@ -3,15 +3,15 @@ session_start();
 session_regenerate_id(true);
 if(isset($_SESSION['login']) == false)
 {
-	print 'ログインされていません。<br/>';
-	print '<a href = "../staff_login/staff_login.html">ログイン画面へ</a>';
+	echo "ログインされていません。<br/>";
+	echo "<a href = \"../staff_login/staff_login.html\">ログイン画面へ</a>";
 	exit();
 }
 else
 {
-	print $_SESSION['staff_name'];
-	print 'さんログイン中<br/>';
-	print '<br/>';
+	echo $_SESSION['staff_name'];
+	echo "さんログイン中<br/>";
+	echo "<br/>";
 }
 ?>
 
@@ -58,7 +58,7 @@ try
 }
 catch(Exception $e)
 {
-	print 'ただいまメンテナンス中です';
+	echo 'ただいまメンテナンス中です';
 	exit();
 }
 
@@ -67,17 +67,17 @@ catch(Exception $e)
 商品削除<br/>
 <br/>
 商品コード<br/>
-<?php print $product_code;?>
+<?php echo $product_code;?>
 <br/>
 <br/>
 商品名<br/>
-<?php print $product_name;?><br/>
-<?php print $disp_gazou;?><br/>
+<?php echo $product_name;?><br/>
+<?php echo $disp_gazou;?><br/>
 この商品を削除してよろしいですか？<br/>
 <br/>
 <form method = "post" action = "product_delete_done.php">
-<input type = "hidden" name = "code" value = "<?php print $product_code;?>">
-<input type = "hidden" name = "gazou_name" value = "<?php print $product_gazou_name;?>">
+<input type = "hidden" name = "code" value = "<?php echo $product_code;?>">
+<input type = "hidden" name = "gazou_name" value = "<?php echo $product_gazou_name;?>">
 <input type = "button" onclick = "history.back()" value = "戻る">
 <input type = "submit" value = "OK">
 </form>

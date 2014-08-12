@@ -3,15 +3,15 @@ session_start();
 session_regenerate_id(true);
 if(isset($_SESSION['login']) == false)
 {
-	print 'ログインされていません。<br/>';
-	print '<a href = "../staff_login/staff_login.html">ログイン画面へ</a>';
+	echo "ログインされていません。<br/>";
+	echo "<a href = \"../staff_login/staff_login.html\">ログイン画面へ</a>";
 	exit();
 }
 else
 {
-	print $_SESSION['staff_name'];
-	print 'さんログイン中<br/>';
-	print '<br/>';
+	echo $_SESSION['staff_name'];
+	echo "さんログイン中<br/>";
+	echo "<br/>";
 }
 ?>
 
@@ -57,7 +57,7 @@ try
 }
 catch(Exception $e)
 {
-	print 'ただいまメンテナンス中です';
+	echo "ただいまメンテナンス中です";
 	exit();
 }
 
@@ -66,15 +66,15 @@ catch(Exception $e)
 商品情報参照<br/>
 <br/>
 商品コード<br/>
-<?php print $product_code;?>
+<?php echo $product_code;?>
 <br/>
 <br/>
 商品名<br/>
-<?php print $product_name;?><br/>
+<?php echo $product_name;?><br/>
 <br/>
 価格<br/>
-<?php print $product_price;?>円<br/>
-<?php print $disp_gazou;?><br/>
+<?php echo $product_price;?>円<br/>
+<?php echo $disp_gazou;?><br/>
 <br/>
 <form>
 <input type = "button" onclick = "history.back()" value = "戻る">

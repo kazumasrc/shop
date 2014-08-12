@@ -3,15 +3,15 @@ session_start();
 session_regenerate_id(true);
 if(isset($_SESSION['login']) == false)
 {
-	print 'ログインされていません。<br/>';
-	print '<a href = "../staff_login/staff_login.html">ログイン画面へ</a>';
+	echo "ログインされていません。<br/>";
+	echo "<a href = \"../staff_login/staff_login.html\">ログイン画面へ</a>";
 	exit();
 }
 else
 {
-	print $_SESSION['staff_name'];
-	print 'さんログイン中<br/>';
-	print '<br/>';
+	echo $_SESSION['staff_name'];
+	echo "さんログイン中<br/>";
+	echo "<br/>";
 }
 ?>
 
@@ -32,10 +32,8 @@ try
 	$dbh = new PDO($dsn,$user,$password);
 	$dbh->query('SET NAMES utf8');
 
-	$post = sanitize($_POST);
-
-	$product_code=$post['code'];
-	$product_gazou_name=$post['gazou_name'];
+	$product_code=$_POST['code'];
+	$product_gazou_name=$_POST['gazou_name'];
 	
 	$sql = 'DELETE FROM mst_product WHERE code=?';
 	$stmt = $dbh->prepare($sql);
@@ -48,12 +46,12 @@ try
 		unlink('./gazou/' .$product_gazou_name);
 	}
 
-	print '削除しました。<br/><br/>';
+	echo "削除しました。<br/><br/>";
 
 }
 catch(Exception $e)
 {
-	print 'ただいまメンテナンス中です';
+	echo "ただいまメンテナンス中です";
 	exit();
 }
 

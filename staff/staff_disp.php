@@ -3,15 +3,15 @@ session_start();
 session_regenerate_id(true);
 if(isset($_SESSION['login']) == false)
 {
-	print 'ログインされていません。<br/>';
-	print '<a href = "../staff_login/staff_login.html">ログイン画面へ</a>';
+	echo "ログインされていません。<br/>";
+	echo "<a href = \"../staff_login/staff_login.html\">ログイン画面へ</a>";
 	exit();
 }
 else
 {
-	print $_SESSION['staff_name'];
-	print 'さんログイン中<br/>';
-	print '<br/>';
+	echo $_SESSION['staff_name'];
+	echo "さんログイン中<br/>";
+	echo "<br/>";
 }
 ?>
 
@@ -47,7 +47,7 @@ try
 }
 catch(Exception $e)
 {
-	print 'ただいまメンテナンス中です';
+	echo 'ただいまメンテナンス中です';
 	exit();
 }
 
@@ -56,11 +56,11 @@ catch(Exception $e)
 スタッフ情報参照<br/>
 <br/>
 スタッフコード<br/>
-<?php print $staff_code;?>
+<?php echo htmlspecialchars($staff_code);?>
 <br/>
 <br/>
 スタッフ名<br/>
-<?php print $staff_name;?><br/>
+<?php echo htmlspecialchars($staff_name);?><br/>
 <br/>
 <form>
 <input type = "button" onclick = "history.back()" value = "戻る">

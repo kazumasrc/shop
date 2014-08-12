@@ -3,15 +3,15 @@ session_start();
 session_regenerate_id(true);
 if(isset($_SESSION['login']) == false)
 {
-	print 'ログインされていません。<br/>';
-	print '<a href = "../staff_login/staff_login.html">ログイン画面へ</a>';
+	echo "ログインされていません。<br/>";
+	echo "<a href = \"../staff_login/staff_login.html\">ログイン画面へ</a>";
 	exit();
 }
 else
 {
-	print $_SESSION['staff_name'];
-	print 'さんログイン中<br/>';
-	print '<br/>';
+	echo $_SESSION['staff_name'];
+	echo "さんログイン中<br/>";
+	echo "<br/>";
 }
 ?>
 
@@ -38,28 +38,29 @@ try
 
 	$dbh = null;
 	
-	print '商品一覧<br/><br/>';
+	echo "商品一覧<br/><br/>";
 
-	print '<form method = "post" action = "product_branch.php">';
+	echo "<form method = \"post\" action = \"product_branch.php\">";
 	while($rec = $stmt->fetch(PDO::FETCH_ASSOC))
 	{
-		print '<input type = "radio" name = "productcode" value = "' .$rec['code']. '">';
-		print $rec['name'].'---';
-		print $rec['price'].'円';
-		print '<br/>';
+		echo "<input type = \"radio\" name = \"productcode\" value = \"";
+		echo htmlspecialchars($rec['code'])."\">";
+		echo $rec['name']."---";
+		echo $rec['price']."円";
+		echo "<br/>";
 	}
-	print '<input type="submit" name="disp" value="参照">';
-	print '<input type="submit" name="add" value="追加">';
-	print '<input type="submit" name="edit" value="修正">';
-	print '<input type="submit" name="delete" value="削除">';
-	print '</form>';
-	print '<br/>';
-	print '<a href = "../staff_login/staff_top.php">トップメニューへ</a><br/>';
+	echo "<input type=\"submit\" name=\"disp\" value=\"参照\">";
+	echo "<input type=\"submit\" name=\"add\" value=\"追加\">";
+	echo "<input type=\"submit\" name=\"edit\" value=\"修正\">";
+	echo "<input type=\"submit\" name=\"delete\" value=\"削除\">";
+	echo "</form>";
+	echo "<br/>";
+	echo "<a href = \"../staff_login/staff_top.php\">トップメニューへ</a><br/>";
 
 }
 catch(Exception $e)
 {
-	print 'ただいまメンテナンス中です';
+	echo "ただいまメンテナンス中です";
 	exit();
 }
 

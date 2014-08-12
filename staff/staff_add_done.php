@@ -3,15 +3,15 @@ session_start();
 session_regenerate_id(true);
 if(isset($_SESSION['login']) == false)
 {
-	print 'ログインされていません。<br/>';
-	print '<a href = "../staff_login/staff_login.html">ログイン画面へ</a>';
+	echo "ログインされていません。<br/>";
+	echo "<a href = \"../staff_login/staff_login.html\">ログイン画面へ</a>";
 	exit();
 }
 else
 {
-	print $_SESSION['staff_name'];
-	print 'さんログイン中<br/>';
-	print '<br/>';
+	echo $_SESSION['staff_name'];
+	echo "さんログイン中<br/>";
+	echo "<br/>";
 }
 ?>
 
@@ -32,10 +32,8 @@ try
 	$dbh = new PDO($dsn,$user,$password);
 	$dbh->query('SET NAMES utf8');
 
-	$post = sanitize($_POST);
-
-	$staff_name=$post['staff_name'];
-	$staff_pass=$post['staff_pass'];
+	$staff_name=$_POST['staff_name'];
+	$staff_pass=$_POST['staff_pass'];
 
 	$sql = 'INSERT INTO mst_staff(name,password) VALUES(?,?)';
 	$stmt = $dbh->prepare($sql);
@@ -45,13 +43,13 @@ try
 
 	$dbh = null;
 
-	print $staff_name;
-	print 'さんを追加しました。<br/>';
+	echo $staff_name;
+	echo "さんを追加しました。<br/>";
 
 }
 catch(Exception $e)
 {
-	print 'ただいまメンテナンス中です';
+	echo "ただいまメンテナンス中です";
 	exit();
 }
 

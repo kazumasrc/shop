@@ -3,15 +3,15 @@ session_start();
 session_regenerate_id(true);
 if(isset($_SESSION['login']) == false)
 {
-	print 'ログインされていません。<br/>';
-	print '<a href = "../staff_login/staff_login.html">ログイン画面へ</a>';
+	echo "ログインされていません。<br/>";
+	echo "<a href = \"../staff_login/staff_login.html\">ログイン画面へ</a>";
 	exit();
 }
 else
 {
-	print $_SESSION['staff_name'];
-	print 'さんログイン中<br/>';
-	print '<br/>';
+	echo $_SESSION['staff_name'];
+	echo "さんログイン中<br/>";
+	echo "<br/>";
 }
 ?>
 
@@ -37,24 +37,24 @@ $product_gazou = $_FILES['gazou'];
 
 if($product_name=='')
 {
-	print "商品名が入力されていません<br/>";
+	echo "商品名が入力されていません<br/>";
 }
 else
 {
-	print "商品名：";
-	print $product_name;
-	print "<br/>";
+	echo "商品名：";
+	echo $product_name;
+	echo "<br/>";
 }
 
 if(preg_match('/^[0-9]+$/', $product_price) == 0)
 {
-	print '価格は半角数字で入力してください！<br/>';
+	echo "価格は半角数字で入力してください！<br/>";
 }
 else
 {
-	print "価格：";
-	print $product_price;
-	print "円<br/>";
+	echo "価格：";
+	echo $product_price;
+	echo "円<br/>";
 }
 
 
@@ -62,37 +62,39 @@ if($product_gazou['size'] > 0)
 {
 	if($product_gazou['size'] > 1000000)
 	{
-		print '画像が大きすぎます';
+		echo "画像が大きすぎます";
 	}
 	//ファイル名が半角かのチェック入れる
 	else
 	{
 		move_uploaded_file($product_gazou['tmp_name'], './gazou/' .$product_gazou['name']);
-		print '<img src = "./gazou/' .$product_gazou['name'].'">';
-		print '<br/>';
+		echo "<img src = \"./gazou/";
+		echo $product_gazou['name']."\">";
+		echo "<br/>";
 	}
 }
 
 if($product_name==''||preg_match('/^[0-9]+$/', $product_price) == 0 || $product_gazou['size'] > 1000000)
 {
-	print '<form>';
-	print '<input type="button" onclick="history.back()" value="戻る">';
-	print '</form>';
+	echo "<form>";
+	echo "<input type=\"button\" onclick=\"history.back()\" value=\"戻る\">";
+	echo "</form>";
 }
 else
 {
-	print '上記の商品を登録します。<br/>';
-	print '<form method="post" action="product_edit_done.php">';
-	print '<input name="code" type="hidden" value="'.$product_code.'">';
-	print '<input name="name" type="hidden" value="'.$product_name.'">';
-	print '<input name="price" type="hidden" value="'.$product_price.'">';
-	print '<input name="gazou_name_old" type="hidden" value="'.$product_gazou_name_old.'">';
-	print '<input name="gazou_name" type="hidden" value="'.$product_gazou['name'].'">';
+	echo "上記の商品を登録します。<br/>";
+	echo "<form method=\"post\" action=\"product_edit_done.php\">";
+	echo "<input name=\"code\" type=\"hidden\" value=\"$product_code\">";
+	echo "<input name=\"name\" type=\"hidden\" value=\"$product_name\">";
+	echo "<input name=\"price\" type=\"hidden\" value=\"$product_price\">";
+	echo "<input name=\"gazou_name_old\" type=\"hidden\" value=\"$product_gazou_name_old\">";
+	echo "<input name=\"gazou_name\" type=\"hidden\" value=\"";
+	echo $product_gazou['name']."\">";
 	//画像未選択の際に画像を変更しない処理は未実装
-	print '<br/>';
-	print '<input type="button" onclick="history.back()" value="戻る">';
-	print '<input type="submit" value="OK">';
-	print '</form>';
+	echo "<br/>";
+	echo "<input type=\"button\" onclick=\"history.back()\" value=\"戻る\">";
+	echo "<input type=\"submit\" value=\"OK\">";
+	echo "</form>";
 }
 ?>
 
