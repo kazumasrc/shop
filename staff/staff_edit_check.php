@@ -1,17 +1,25 @@
 <?php
 session_start();
 session_regenerate_id(true);
+require_once '../common/common.php';
+require_once('Smarty.class.php');
+
+$smarty = smarty_initialize();
+
 if(isset($_SESSION['login']) == false)
 {
-	echo "ログインされていません。<br/>";
-	echo "<a href = \"../staff_login/staff_login.html\">ログイン画面へ</a>";
+	$islogin = false;
+
+	$smarty->assign('islogin',$islogin);
+	$smarty->display('islogin.tpl');
 	exit();
 }
 else
 {
-	echo $_SESSION['staff_name'];
-	echo "さんログイン中<br/>";
-	echo "<br/>";
+	$islogin = true;
+	$smarty->assign('session_staff_name',$_SESSION['staff_name']);
+	$smarty->assign('islogin',$islogin);
+	$smarty->display('islogin.tpl');
 }
 ?>
 
@@ -26,52 +34,54 @@ else
 <?php
 require_once '../common/config.php';
 require_once '../common/common.php';
+require_once('Smarty.class.php');
+
+$smarty = smarty_initialize();
 
 $staff_code = $_POST['code'];
 $staff_name = $_POST['name'];
 $staff_pass = $_POST['pass'];
 $staff_pass2 = $_POST['pass2'];
 
+$error = false;
+$error_name = false;
 if($staff_name=='')
 {
-	echo "スタッフ名が入力されていません<br/>";
-}
-else
-{
-	echo "スタッフ名：";
-	echo $staff_name;
-	echo "<br/>";
+	$error = true;
+	$error_name = true;
 }
 
+$error_pass1 = false;
 if($staff_pass=='')
 {
-	echo "パスワードが入力されていません<br/>";
+	$error = true;
+	$error_pass1 = true;
 }
 
+$error_pass2 = false;
 if($staff_pass2!=$staff_pass)
 {
-	echo "パスワードが一致しません<br/>";
+	$error = true;
+	$error_pass2 = true;
 }
 
+if($error == false)
+{
+	$staff_pass=md5($staff_pass);
+}
 
-if($staff_name==''||$staff_pass==''||$staff_pass2=='')
-{
-	echo "<form>";
-	echo "<input type=\"button\" onclick=\"history.back()\" value=\"戻る\">";
-	echo "</form>";
-}
-else
-{
-	$staff_pass = md5($staff_pass);
-	echo "<form method=\"post\" action=\"staff_edit_done.php\">";
-	echo "<input name=\"staff_code\" type=\"hidden\" value=\"$staff_code\">";
-	echo "<input name=\"staff_name\" type=\"hidden\" value=\"$staff_name\">";
-	echo "<input name=\"staff_pass\" type=\"hidden\" value=\"$staff_pass\">";
-	echo "<br/>";
-	echo "<input type=\"button\" onclick=\"history.back()\" value=\"戻る\">";
-	echo "<input type=\"submit\" value=\"OK\">";
-	echo "</form>";
-}
+$smarty->assign('staff_code',htmlspecialchars($staff_code));
+$smarty->assign('staff_name',htmlspecialchars($staff_name));
+$smarty->assign('staff_pass',htmlspecialchars($staff_pass));
+$smarty->assign('staff_pass2',htmlspecialchars($staff_pass2));
+
+$smarty->assign('error',$error);
+$smarty->assign('error_name',$error_name);
+$smarty->assign('error_pass1',$error_pass1);
+$smarty->assign('error_pass2',$error_pass2);
+
+$smarty->display('staff_edit_check.tpl');
+
 ?>
 
 </body>

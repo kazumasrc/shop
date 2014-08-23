@@ -15,9 +15,14 @@ if(isset($_COOKIE[session_name()]) == true)
 </head>
 <body>
 
-ログアウトしました。<br/>
-<br/>
-<a href = "../staff_login/staff_login.html">ログイン画面へ</a><br/>
+<?php
+require_once '../common/common.php';
+require_once('Smarty.class.php');
+
+$smarty = smarty_initialize();
+
+$smarty->display('staff_logout.tpl');
+?>
 
 </body>
 </html>

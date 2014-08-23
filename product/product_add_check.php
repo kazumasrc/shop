@@ -1,17 +1,25 @@
 <?php
 session_start();
 session_regenerate_id(true);
+require_once '../common/common.php';
+require_once('Smarty.class.php');
+
+$smarty = smarty_initialize();
+
 if(isset($_SESSION['login']) == false)
 {
-	echo "ログインされていません。<br/>";
-	echo "<a href = \"../staff_login/staff_login.html\">ログイン画面へ</a>";
+	$islogin = false;
+
+	$smarty->assign('islogin',$islogin);
+	$smarty->display('islogin.tpl');
 	exit();
 }
 else
 {
-	echo $_SESSION['staff_name'];
-	echo "さんログイン中<br/>";
-	echo "<br/>";
+	$islogin = true;
+	$smarty->assign('session_staff_name',$_SESSION['staff_name']);
+	$smarty->assign('islogin',$islogin);
+	$smarty->display('islogin.tpl');
 }
 ?>
 
@@ -26,69 +34,66 @@ else
 <?php
 require_once '../common/config.php';
 require_once '../common/common.php';
+require_once('Smarty.class.php');
+
+$smarty = smarty_initialize();
 
 $product_name = $_POST['name'];
 $product_price = $_POST['price'];
 $product_gazou = $_FILES['gazou'];
 
 
+$error = false;
+$error_name = false;
 if($product_name=='')
 {
-	echo "商品名が入力されていません<br/>";
-}
-else
-{
-	echo "商品名：";
-	echo $product_name;
-	echo "<br/>";
+	$error = true;
+	$error_name = true;
 }
 
+$error_price = false;
 if(preg_match('/^[0-9]+$/', $product_price) == 0)
 {
-	echo '価格は半角数字で入力してください！<br/>';
-}
-else
-{
-	echo "価格：";
-	echo $product_price;
-	echo "円<br/>";
+	$error = true;
+	$error_price = true;
 }
 
+
+$error_gazou_size_min = false;
+$error_gazou_size_max = false;
 if($product_gazou['size'] > 0)
 {
 	if($product_gazou['size'] > 1000000)
 	{
-		echo '画像が大きすぎます';
+		$error = true;
+		$error_gazou_size_max = true;
 	}
-	//ファイル名が半角かのチェック入れる
+	//ファイル名が半角かのチェック入れたい
 	else
 	{
 		move_uploaded_file($product_gazou['tmp_name'], './gazou/' .$product_gazou['name']);
-		echo "<img src = \"./gazou/";
-		echo $product_gazou['name']."\">";
-		echo "<br/>";
 	}
-}
-
-if($product_name==''||preg_match('/^[0-9]+$/', $product_price) == 0 || $product_gazou['size'] > 1000000)
-{
-	echo "<form>";
-	echo "<input type=\"button\" onclick=\"history.back()\" value=\"戻る\">";
-	echo "</form>";
 }
 else
 {
-	echo "上記の商品を登録します。<br/>";
-	echo "<form method=\"post\" action=\"product_add_done.php\">";
-	echo "<input name=\"name\" type=\"hidden\" value=\"$product_name\">";
-	echo "<input name=\"price\" type=\"hidden\" value=\"$product_price\">";
-	echo "<input name=\"gazou_name\" type=\"hidden\" value=\"";
-	echo $product_gazou['name']."\">";
-	echo "<br/>";
-	echo "<input type=\"button\" onclick=\"history.back()\" value=\"戻る\">";
-	echo "<input type=\"submit\" value=\"OK\">";
-	echo "</form>";
+	$error_gazou_size_min = true;
 }
+
+
+
+$smarty->assign('product_name',htmlspecialchars($product_name));
+$smarty->assign('product_price',htmlspecialchars($product_price));
+$smarty->assign('product_gazou_name',htmlspecialchars($product_gazou['name']));
+
+$smarty->assign('error',$error);
+$smarty->assign('error_name',$error_name);
+$smarty->assign('error_price',$error_price);
+$smarty->assign('error_gazou_size_min',$error_gazou_size_min);
+$smarty->assign('error_gazou_size_max',$error_gazou_size_max);
+
+
+$smarty->display('product_add_check.tpl');
+
 ?>
 
 </body>

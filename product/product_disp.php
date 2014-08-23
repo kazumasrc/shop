@@ -1,17 +1,25 @@
 <?php
 session_start();
 session_regenerate_id(true);
+require_once '../common/common.php';
+require_once('Smarty.class.php');
+
+$smarty = smarty_initialize();
+
 if(isset($_SESSION['login']) == false)
 {
-	echo "ログインされていません。<br/>";
-	echo "<a href = \"../staff_login/staff_login.html\">ログイン画面へ</a>";
+	$islogin = false;
+
+	$smarty->assign('islogin',$islogin);
+	$smarty->display('islogin.tpl');
 	exit();
 }
 else
 {
-	echo $_SESSION['staff_name'];
-	echo "さんログイン中<br/>";
-	echo "<br/>";
+	$islogin = true;
+	$smarty->assign('session_staff_name',$_SESSION['staff_name']);
+	$smarty->assign('islogin',$islogin);
+	$smarty->display('islogin.tpl');
 }
 ?>
 
@@ -28,6 +36,9 @@ try
 {
 	require_once '../common/config.php';
 	require_once '../common/common.php';
+	require_once('Smarty.class.php');
+
+	$smarty = smarty_initialize();
 
 	$product_code = $_GET['productcode'];
 
@@ -54,31 +65,26 @@ try
 		$disp_gazou = '<img src = "./gazou/' .$product_gazou_name. '">';
 	}
 
+	$smarty->assign('product_code',htmlspecialchars($product_code));
+	$smarty->assign('product_name',htmlspecialchars($product_name));
+	$smarty->assign('product_price',htmlspecialchars($product_price));
+	$smarty->assign('disp_gazou',htmlspecialchars($disp_gazou));
+	$smarty->display('product_disp.tpl');
+
 }
 catch(Exception $e)
 {
-	echo "ただいまメンテナンス中です";
+	require_once '../common/config.php';
+	require_once '../common/common.php';
+	require_once('Smarty.class.php');
+
+	$smarty = smarty_initialize();
+
+	$smarty->display('maintenance.tpl');
 	exit();
 }
 
 ?>
-
-商品情報参照<br/>
-<br/>
-商品コード<br/>
-<?php echo $product_code;?>
-<br/>
-<br/>
-商品名<br/>
-<?php echo $product_name;?><br/>
-<br/>
-価格<br/>
-<?php echo $product_price;?>円<br/>
-<?php echo $disp_gazou;?><br/>
-<br/>
-<form>
-<input type = "button" onclick = "history.back()" value = "戻る">
-</form>
 
 </body>
 </html>

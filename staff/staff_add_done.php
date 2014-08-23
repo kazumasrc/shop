@@ -1,17 +1,25 @@
 <?php
 session_start();
 session_regenerate_id(true);
+require_once '../common/common.php';
+require_once('Smarty.class.php');
+
+$smarty = smarty_initialize();
+
 if(isset($_SESSION['login']) == false)
 {
-	echo "ログインされていません。<br/>";
-	echo "<a href = \"../staff_login/staff_login.html\">ログイン画面へ</a>";
+	$islogin = false;
+
+	$smarty->assign('islogin',$islogin);
+	$smarty->display('islogin.tpl');
 	exit();
 }
 else
 {
-	echo $_SESSION['staff_name'];
-	echo "さんログイン中<br/>";
-	echo "<br/>";
+	$islogin = true;
+	$smarty->assign('session_staff_name',$_SESSION['staff_name']);
+	$smarty->assign('islogin',$islogin);
+	$smarty->display('islogin.tpl');
 }
 ?>
 
@@ -28,6 +36,9 @@ try
 {
 	require_once '../common/config.php';
 	require_once '../common/common.php';
+	require_once('Smarty.class.php');
+
+	$smarty = smarty_initialize();
 
 	$dbh = new PDO($dsn,$user,$password);
 	$dbh->query('SET NAMES utf8');
@@ -43,19 +54,24 @@ try
 
 	$dbh = null;
 
-	echo $staff_name;
-	echo "さんを追加しました。<br/>";
+	$smarty->assign('staff_name',htmlspecialchars($staff_name));
+	$smarty->display('staff_add_done.tpl');
 
 }
 catch(Exception $e)
 {
-	echo "ただいまメンテナンス中です";
+	require_once '../common/config.php';
+	require_once '../common/common.php';
+	require_once('Smarty.class.php');
+
+	$smarty = smarty_initialize();
+
+	$smarty->display('maintenance.tpl');
 	exit();
 }
 
 ?>
 
-<a href="staff_list.php">戻る</a>
 
 </body>
 </html>
