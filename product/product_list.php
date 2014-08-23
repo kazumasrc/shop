@@ -53,8 +53,8 @@ try
 	{
 		echo "<input type = \"radio\" name = \"productcode\" value = \"";
 		echo htmlspecialchars($rec['code'])."\">";
-		echo $rec['name']."---";
-		echo $rec['price']."円";
+		echo htmlspecialchars($rec['name'])."---";
+		echo htmlspecialchars($rec['price'])."円";
 		echo "<br/>";
 	}
 	echo "<input type=\"submit\" name=\"disp\" value=\"参照\">";
