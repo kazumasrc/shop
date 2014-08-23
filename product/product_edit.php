@@ -62,14 +62,14 @@ try
 	}
 	else
 	{
-		$disp_gazou = '<img src = "./gazou/' .$product_gazou_name_old. '">';
+		$disp_gazou = '<img src = "./gazou/' .htmlspecialchars($product_gazou_name_old). '">';
 	}
 	
 	$smarty->assign('product_code',htmlspecialchars($product_code));
 	$smarty->assign('product_gazou_name_old',htmlspecialchars($product_gazou_name_old));
 	$smarty->assign('product_name',htmlspecialchars($product_name));
 	$smarty->assign('product_price',htmlspecialchars($product_price));
-	$smarty->assign('disp_gazou',htmlspecialchars($disp_gazou));
+	$smarty->assign('disp_gazou',$disp_gazou);
 	$smarty->display('product_edit.tpl');
 
 }

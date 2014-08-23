@@ -73,7 +73,10 @@ if($product_gazou['size'] > 0)
 	//ファイル名が半角かのチェック入れたい
 	else
 	{
-		move_uploaded_file($product_gazou['tmp_name'], './gazou/' .$product_gazou['name']);
+		$pic_extension = pathinfo($product_gazou['name'])['extension'];
+		$pic_name = uniqid('', true).".".$pic_extension;
+		echo $pic_name;
+		move_uploaded_file($product_gazou['tmp_name'], './gazou/' .$pic_name);
 	}
 }
 else
@@ -84,7 +87,7 @@ else
 
 $smarty->assign('product_name',htmlspecialchars($product_name));
 $smarty->assign('product_price',htmlspecialchars($product_price));
-$smarty->assign('product_gazou_name',htmlspecialchars($product_gazou['name']));
+$smarty->assign('product_gazou_name',htmlspecialchars($pic_name));
 $smarty->assign('product_code',htmlspecialchars($product_code));
 $smarty->assign('product_gazou_name_old',$product_gazou_name_old);
 
