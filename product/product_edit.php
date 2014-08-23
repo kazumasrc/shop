@@ -53,7 +53,7 @@ try
 	$rec = $stmt->fetch(PDO::FETCH_ASSOC);
 	$product_name = $rec['name'];
 	$product_price = $rec['price'];
-	$product_gazou_name_old = $rec['gazou'];
+	$product_gazou_name_old = $rec['picture'];
 	$dbh = null;
 
 	if($product_gazou_name_old == '')

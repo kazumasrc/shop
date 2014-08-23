@@ -48,7 +48,7 @@ try
 	$product_gazou_name = $_POST['gazou_name'];
 
 
-	$sql = 'INSERT INTO mst_product(name,price,gazou) VALUES(?,?,?)';
+	$sql = 'INSERT INTO mst_product(name,price,picture) VALUES(?,?,?)';
 	$stmt = $dbh->prepare($sql);
 	$data[] = $product_name;
 	$data[] = $product_price;

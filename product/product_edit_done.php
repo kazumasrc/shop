@@ -49,7 +49,7 @@ try
 	$product_gazou_name = $_POST['gazou_name'];
 	$product_gazou_name_old = $_POST['gazou_name_old'];
 
-	$sql = 'UPDATE mst_product SET name=?,price=?,gazou=? WHERE code=?';
+	$sql = 'UPDATE mst_product SET name=?,price=?,picture=? WHERE code=?';
 	$stmt = $dbh->prepare($sql);
 	$data[] = $product_name;
 	$data[] = $product_price;

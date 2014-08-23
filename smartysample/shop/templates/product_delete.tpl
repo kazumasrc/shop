@@ -13,7 +13,7 @@
 <br/>
 <br/>
 商品名<br/>
-{$product_name}
+{$product_name}<br/>
 {$disp_gazou}<br/>
 この商品を削除してよろしいですか？<br/>
 <br/>
