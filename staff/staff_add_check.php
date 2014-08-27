@@ -64,6 +64,3 @@ $smarty->assign('error_pass2',$error_pass2);
 
 $smarty->display('staff_add_check.tpl');
 ?>
-
-</body>
-</html>

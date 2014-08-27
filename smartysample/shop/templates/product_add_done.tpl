@@ -1,13 +1,13 @@
-{* Smarty*}
-<html>
-<head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<title>Smarty</title>
-</head>
-<body>
-<?php mb_internal_encoding();?>
-{$product_name}を追加しました。<br/>
-<a href="product_list.php">戻る</a><br/>
+{extends file='base.tpl'}
 
-</body>
-</html>
+{block name=title}
+商品追加完了
+{/block}
+
+{block name=body}
+{if $islogin == true}
+	{$product_name}を追加しました。<br/>
+	<a href="product_list.php">戻る</a><br/>
+{/if}
+
+{/block}

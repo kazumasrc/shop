@@ -1,14 +1,14 @@
-{* Smarty*}
-<html>
-<head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<title>Smarty</title>
-</head>
-<body>
+{extends file='base.tpl'}
 
-修正しました。<br/>
+{block name=title}
+商品修正完了
+{/block}
 
-<a href="product_list.php">戻る</a><br/>
+{block name=body}
+{if $islogin == true}
+	修正しました。<br/>
 
-</body>
-</html>
+	<a href="product_list.php">戻る</a><br/>
+{/if}
+
+{/block}

@@ -1,14 +1,13 @@
-{* Smarty*}
-<html>
-<head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<title>Smarty</title>
-</head>
-<body>
+{extends file='base.tpl'}
 
-<br/>
-削除しました。<br/><br/>
-<a href="staff_list.php">戻る</a>
+{block name=title}
+スタッフ削除完了
+{/block}
 
-</body>
-</html>
+{block name=body}
+{if $islogin == true}
+	削除しました。<br/><br/>
+	<a href="staff_list.php">戻る</a>
+{/if}
+
+{/block}

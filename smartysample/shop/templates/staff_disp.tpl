@@ -1,23 +1,22 @@
-{* Smarty*}
-<html>
-<head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<title>Smarty</title>
-</head>
-<body>
+{extends file='base.tpl'}
 
-スタッフ情報参照<br/>
-<br/>
-スタッフコード<br/>
-{$staff_code}<br/>
-<br/>
-スタッフ名<br/>
-{$staff_name}<br/>
-<br/>
-<form>
-<input type = "button" onclick = "history.back()" value = "戻る">
-</form>
+{block name=title}
+スタッフ削除
+{/block}
 
+{block name=body}
+{if $islogin == true}
+	スタッフ情報参照<br/>
+	<br/>
+	スタッフコード<br/>
+	{$staff_code}<br/>
+	<br/>
+	スタッフ名<br/>
+	{$staff_name}<br/>
+	<br/>
+	<form>
+	<input type = "button" onclick = "history.back()" value = "戻る">
+	</form>
+{/if}
 
-</body>
-</html>
+{/block}

@@ -1,12 +1,9 @@
-{* Smarty*}
-<html>
-<head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<title>スタッフ管理画面</title>
-</head>
-<body>
+{extends file='base.tpl'}
 
-{include file = 'islogin.tpl'}
+{block name=title}
+スタッフ追加確認
+{/block}
+{block name=body}
 
 {if $islogin == true}
 	{if $error_name == true}
@@ -45,5 +42,4 @@
 	{/if}
 {/if}
 
-</body>
-</html>
+{/block}

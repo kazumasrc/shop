@@ -1,34 +1,29 @@
 <?php
 session_start();
 session_regenerate_id(true);
+require_once '../common/config.php';
+require_once '../common/common.php';
+require_once('Smarty.class.php');
+
+$smarty = smarty_initialize();
+
 if(isset($_SESSION['login']) == false)
 {
-	echo "ログインされていません。<br/>";
-	echo "<a href = \"../staff_login/staff_login.html\">ログイン画面へ</a>";
+	$islogin = false;
+
+	$smarty->assign('islogin',$islogin);
+	$smarty->display('staff_list.tpl');
 	exit();
 }
 else
 {
-	echo $_SESSION['staff_name'];
-	echo "さんログイン中<br/>";
-	echo "<br/>";
+	$islogin = true;
+	$smarty->assign('session_staff_name',$_SESSION['staff_name']);
+	$smarty->assign('islogin',$islogin);
 }
-?>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-<meta http-equiv="Content-Type" content = "text/html; charset=UTF-8">
-<title>スタッフ管理画面</title>
-</head>
-<body>
-
-<?php
 try
 {
-	require_once '../common/config.php';
-	require_once '../common/common.php';
-
 	$dbh = new PDO($dsn,$user,$password);
 	$dbh->query('SET NAMES utf8');
 
@@ -37,35 +32,24 @@ try
 	$stmt->execute();
 
 	$dbh = null;
-	
-	echo "スタッフ一覧<br/><br/>";
 
-	echo "<form method = \"post\" action = \"staff_branch.php\">";
+	$max = 0;
 	while($rec = $stmt->fetch(PDO::FETCH_ASSOC))
 	{
-		echo "<input type = \"radio\" name = \"staffcode\" value = \"";
-		echo htmlspecialchars($rec['code']); 
-		echo "\">";
-		echo htmlspecialchars($rec['name']);
-		echo "<br/>";
+		$code[$max] = $rec['code'];
+		$name[$max] = $rec['name'];
+		$max += 1;
 	}
-	echo "<input type=\"submit\" name=\"disp\" value=\"参照\">";
-	echo "<input type=\"submit\" name=\"add\" value=\"追加\">";
-	echo "<input type=\"submit\" name=\"edit\" value=\"修正\">";
-	echo "<input type=\"submit\" name=\"delete\" value=\"削除\">";
-	echo "</form>";
-	echo "<br/>";
-	echo "<a href = \"../staff_login/staff_top.php\">トップメニューへ</a><br/>";
 
+	$smarty->assign('code',$code);
+	$smarty->assign('name',$name);
+	$smarty->assign('max',$max);
+	$smarty->display('staff_list.tpl');
 }
 catch(Exception $e)
 {
-	echo "ただいまメンテナンス中です";
+	$smarty->display('maintenance.tpl');
 	exit();
 }
 
 ?>
-
-
-</body>
-</html>

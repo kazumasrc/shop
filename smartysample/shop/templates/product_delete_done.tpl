@@ -1,14 +1,13 @@
-{* Smarty*}
-<html>
-<head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<title>Smarty</title>
-</head>
-<body>
-<?php mb_internal_encoding();?>
-<br/>
-削除しました。<br/><br/>
-<a href="product_list.php">戻る</a>
+{extends file='base.tpl'}
 
-</body>
-</html>
+{block name=title}
+商品削除完了
+{/block}
+
+{block name=body}
+{if $islogin == true}
+	削除しました。<br/><br/>
+	<a href="product_list.php">戻る</a>
+{/if}
+
+{/block}
