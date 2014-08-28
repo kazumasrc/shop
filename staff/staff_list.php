@@ -36,8 +36,8 @@ try
 	$max = 0;
 	while($rec = $stmt->fetch(PDO::FETCH_ASSOC))
 	{
-		$code[$max] = $rec['code'];
-		$name[$max] = $rec['name'];
+		$code[$max] = htmlspecialchars($rec['code']);
+		$name[$max] = htmlspecialchars($rec['name']);
 		$max += 1;
 	}
 

@@ -36,17 +36,11 @@ try
 	$max = 0;
 	while($rec = $stmt->fetch(PDO::FETCH_ASSOC))
 	{
-		$code[$max] = $rec['code'];
-		$name[$max] = $rec['name'];
-		$price[$max] = $rec['price'];
+		$code[$max] = htmlspecialchars($rec['code']);
+		$name[$max] = htmlspecialchars($rec['name']);
+		$price[$max] = htmlspecialchars($rec['price']);
 		$max += 1;
 	}
-
-	/*
-	$smarty->assign('code',htmlspecialchars($code));
-	$smarty->assign('name',htmlspecialchars($name));
-	$smarty->assign('price',htmlspecialchars($price));
-	*/
 	$smarty->assign('code',$code);
 	$smarty->assign('name',$name);
 	$smarty->assign('price',$price);
