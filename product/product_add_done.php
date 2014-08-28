@@ -47,12 +47,6 @@ try
 }
 catch(Exception $e)
 {
-	require_once '../common/config.php';
-	require_once '../common/common.php';
-	require_once('Smarty.class.php');
-
-	$smarty = smarty_initialize();
-
 	$smarty->display('maintenance.tpl');
 	exit();
 }
