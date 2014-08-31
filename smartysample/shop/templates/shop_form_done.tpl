@@ -18,5 +18,6 @@
 
 
 <br/>
+<a href="shop_list.php">商品一覧に戻る</a><br/>
 
 {/block}

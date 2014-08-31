@@ -53,6 +53,8 @@ for($i = 0; $i < $max; $i++)
 	$rec = $stmt->fetch(PDO::FETCH_ASSOC);
 	$product_name = $rec['name'];
 	$product_price = $rec['price'];
+	//DB登録用に格納
+	$sale_price[] = $product_price;
 	$product_quantity = $quantity[$i];
 	
 	$mailtext .= $product_name." ";
@@ -61,7 +63,7 @@ for($i = 0; $i < $max; $i++)
 	$mailtext .= $product_price * $product_quantity."円";
 	$mailtext .= "\n";
 }
-$dbh = null;
+//$dbh = null;
 
 $mailtext .= "送料は無料です。\n";
 $mailtext .= "--------------------\n";
@@ -106,6 +108,48 @@ mb_internal_encoding("UTF-8");
 mb_send_mail('hogehoge@hoge.com',$mail_sub,$mail_body,$mail_head);
 //↑メール送信（to管理）
 
+//テーブルにロックをかける
+$sql = 'LOCK TABLES sale, sale_detail WRITE';
+$stmt = $dbh->prepare($sql);
+$stmt->execute($data);
+
+$sql = 'INSERT INTO sale(code_customer,name,email,postal1,postal2,address,tel) VALUES(?,?,?,?,?,?,?)';
+$stmt = $dbh->prepare($sql);
+$data = array();
+$data[] = 0;
+$data[] = $customer_name;
+$data[] = $customer_email;
+$data[] = $customer_postal1;
+$data[] = $customer_postal2;
+$data[] = $customer_address;
+$data[] = $customer_tel;
+$stmt->execute($data);
+
+
+$sql = 'SELECT LAST_INSERT_ID()';
+$stmt = $dbh->prepare($sql);
+$stmt->execute();
+$rec = $stmt->fetch(PDO::FETCH_ASSOC);
+$lastcode = $rec['LAST_INSERT_ID()'];
+
+for($i = 0; $i < $max; $i++)
+{
+	$sql = 'INSERT INTO sale_detail(code_sale,code_product,price,quantity) VALUES(?,?,?,?)';
+	$stmt = $dbh->prepare($sql);
+	$data = array();
+	$data[] = $lastcode;
+	$data[] = $cart[$i];
+	$data[] = $sale_price[$i];
+	$data[] = $quantity[$i];
+	$stmt->execute($data);
+}
+
+//テーブルのロックを解除する
+$sql = 'UNLOCK TABLES';
+$stmt = $dbh->prepare($sql);
+$stmt->execute($data);
+
+$dbh = null;
 
 $smarty->assign('customer_name',htmlspecialchars($customer_name));
 $smarty->assign('customer_email',htmlspecialchars($customer_email));

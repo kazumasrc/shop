@@ -6,6 +6,7 @@
 
 {block name=body}
 
+{if $max != 0}
 カートの中身<br/>
 <table border = "1">
 <tr>
@@ -16,6 +17,7 @@
 <td>小計</td>
 <td>削除</td>
 </tr>
+{/if}
 
 <form method = "post" action = "shop_quantity_change.php">
 
@@ -44,6 +46,8 @@
 <br/>
 <a href="shop_list.php">商品一覧に戻る</a><br/>
 <br/>
-<a href="shop_form.php">ご購入手続きへ進む</a><br>
 
+{if $max != 0}
+	<a href="shop_form.php">ご購入手続きへ進む</a><br>
+{/if}
 {/block}

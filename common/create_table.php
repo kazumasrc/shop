@@ -15,7 +15,7 @@ try
 	//mst_staffテーブル生成
 	$dbh = new PDO($dsn,$user,$password);
 	$dbh->query('SET NAMES utf8');
-	$sql = "CREATE TABLE IF NOT EXISTS mst_staff(code INT(11) AUTO_INCREMENT PRIMARY KEY, name VARCHAR(15), password VARCHAR(15))";
+	$sql = 'CREATE TABLE IF NOT EXISTS mst_staff(code INT(11) AUTO_INCREMENT PRIMARY KEY, name VARCHAR(15), password VARCHAR(15))';
 	$stmt = $dbh->prepare($sql);
 	$stmt->execute();
 	
@@ -25,11 +25,31 @@ try
 	//mst_productテーブル生成
 	$dbh = new PDO($dsn,$user,$password);
 	$dbh->query('SET NAMES utf8');
-	$sql = "CREATE TABLE IF NOT EXISTS mst_product(code INT(11) AUTO_INCREMENT PRIMARY KEY, name VARCHAR(30), price INT(11), picture VARCHAR(30))";
+	$sql = 'CREATE TABLE IF NOT EXISTS mst_product(code INT(11) AUTO_INCREMENT PRIMARY KEY, name VARCHAR(30), price INT(11), picture VARCHAR(30))';
 	$stmt = $dbh->prepare($sql);
 	$stmt->execute();
 	
 	echo "mst_product created";
+	echo "<br/>";
+
+	//saleテーブル生成
+	$dbh = new PDO($dsn,$user,$password);
+	$dbh->query('SET NAMES utf8');
+	$sql = 'CREATE TABLE IF NOT EXISTS sale(code INT AUTO_INCREMENT PRIMARY KEY, date TIMESTAMP, code_customer INT, name VARCHAR(30), email VARCHAR(50), postal1 INT(3), postal2 INT(4), address VARCHAR(50), tel VARCHAR(30))';
+	$stmt = $dbh->prepare($sql);
+	$stmt->execute();
+	
+	echo "sale created";
+	echo "<br/>";
+
+	//sale_detailテーブル生成
+	$dbh = new PDO($dsn,$user,$password);
+	$dbh->query('SET NAMES utf8');
+	$sql = 'CREATE TABLE IF NOT EXISTS sale_detail(code INT AUTO_INCREMENT PRIMARY KEY, code_sale INT, code_product INT, price INT, quantity INT)';
+	$stmt = $dbh->prepare($sql);
+	$stmt->execute();
+	
+	echo "sale_detail created";
 	echo "<br/>";
 
 	$dbh = null;
